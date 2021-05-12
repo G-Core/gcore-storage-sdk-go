@@ -3,7 +3,7 @@ go_bin:=$(shell pwd)/bin
 # if you want to implement api updates then use bash `make`
 # and extend/update/fix sdk code after
 
-all: clean tools gen dep lint test
+all: clean tools gen dep lint
 
 tools:
 	GOBIN=${go_bin} go install -mod=mod github.com/go-swagger/go-swagger/cmd/swagger
