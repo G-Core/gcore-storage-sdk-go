@@ -22,9 +22,9 @@ type (
 )
 
 //WithBearerAuth opt to setup SDK authWriter
-func WithBearerAuth(token *string) SdkOpt {
+func WithBearerAuth(tokenGetter func() string) SdkOpt {
 	return func(sdk *apiCore) {
-		sdk.authWriter = httptransport.BearerToken(*token)
+		sdk.authWriter = httptransport.BearerToken(tokenGetter())
 	}
 }
 
