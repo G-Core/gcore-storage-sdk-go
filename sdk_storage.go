@@ -84,3 +84,20 @@ func (sdk *sdkKey) DeleteStorage(opts ...func(params *storage.StorageDeleteHTTPP
 	}
 	return nil
 }
+
+//LinkKeyToStorage writer for g-core storage api
+func (sdk *sdkKey) LinkKeyToStorage(opts ...func(params *storage.KeyLinkHTTPParams)) error {
+	params := &storage.KeyLinkHTTPParams{}
+	for _, opt := range opts {
+		opt(params)
+	}
+	res, err := sdk.client.Storage.KeyLinkHTTP(params, sdk.authWriter)
+	if err != nil {
+		return fmt.Errorf("request: %w", err)
+	}
+	if res.Error() != "" {
+		//nolint: typecheck
+		return SwaggerResponseError(res.Error())
+	}
+	return nil
+}
