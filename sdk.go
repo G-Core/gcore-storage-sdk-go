@@ -37,8 +37,8 @@ func WithBearerAuth(tokenGetter func() string) SdkOpt {
 func NewSDK(apiHost, apiBasePath string, opts ...SdkOpt) *SDK {
 	schema := strings.Split(apiHost, "://")
 	if len(schema) > 1 {
-		schema = schema[0:1]
 		apiHost = schema[1]
+		schema = schema[0:1]
 	} else {
 		schema = nil
 	}
