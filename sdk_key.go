@@ -22,10 +22,6 @@ func (sdk *sdkKey) KeysList(opts ...func(*key.KeyListHTTPV2Params)) ([]models.Ke
 	if err != nil {
 		return nil, fmt.Errorf("request: %w", err)
 	}
-	if res.Error() != "" {
-		//nolint: typecheck
-		return nil, SwaggerResponseError(res.Error())
-	}
 	list := make([]models.Key, len(res.Payload))
 	for i := range res.Payload {
 		list[i] = *res.Payload[i]
@@ -43,10 +39,6 @@ func (sdk *sdkKey) CreateKey(opts ...func(*key.KeyCreateHTTPParams)) (*models.Ke
 	if err != nil {
 		return nil, fmt.Errorf("request: %w", err)
 	}
-	if res.Error() != "" {
-		//nolint: typecheck
-		return nil, SwaggerResponseError(res.Error())
-	}
 	return res.Payload, nil
 }
 
@@ -56,13 +48,9 @@ func (sdk *sdkKey) DeleteKey(opts ...func(*key.KeyDeleteHTTPParams)) error {
 	for _, opt := range opts {
 		opt(params)
 	}
-	res, err := sdk.client.Key.KeyDeleteHTTP(params, sdk.authWriter)
+	_, err := sdk.client.Key.KeyDeleteHTTP(params, sdk.authWriter)
 	if err != nil {
 		return fmt.Errorf("request: %w", err)
-	}
-	if res.Error() != "" {
-		//nolint: typecheck
-		return SwaggerResponseError(res.Error())
 	}
 	return nil
 }

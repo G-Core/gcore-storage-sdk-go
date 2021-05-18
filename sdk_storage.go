@@ -22,10 +22,6 @@ func (sdk *sdkStorage) StoragesList(opts ...func(params *storage.StorageListHTTP
 	if err != nil {
 		return nil, fmt.Errorf("request: %w", err)
 	}
-	if res.Error() != "" {
-		//nolint: typecheck
-		return nil, SwaggerResponseError(res.Error())
-	}
 	list := make([]models.Storage, len(res.Payload))
 	for i := range res.Payload {
 		list[i] = *res.Payload[i]
@@ -43,10 +39,6 @@ func (sdk *sdkKey) CreateStorage(opts ...func(params *storage.StorageCreateHTTPP
 	if err != nil {
 		return nil, fmt.Errorf("request: %w", err)
 	}
-	if res.Error() != "" {
-		//nolint: typecheck
-		return nil, SwaggerResponseError(res.Error())
-	}
 	return res.Payload, nil
 }
 
@@ -60,10 +52,6 @@ func (sdk *sdkKey) ModifyStorage(opts ...func(params *storage.StorageUpdateHTTPP
 	if err != nil {
 		return nil, fmt.Errorf("request: %w", err)
 	}
-	if res.Error() != "" {
-		//nolint: typecheck
-		return nil, SwaggerResponseError(res.Error())
-	}
 	return res.Payload, nil
 }
 
@@ -74,13 +62,9 @@ func (sdk *sdkKey) DeleteStorage(opts ...func(params *storage.StorageDeleteHTTPP
 	for _, opt := range opts {
 		opt(params)
 	}
-	res, err := sdk.client.Storage.StorageDeleteHTTP(params, sdk.authWriter)
+	_, err := sdk.client.Storage.StorageDeleteHTTP(params, sdk.authWriter)
 	if err != nil {
 		return fmt.Errorf("request: %w", err)
-	}
-	if res.Error() != "" {
-		//nolint: typecheck
-		return SwaggerResponseError(res.Error())
 	}
 	return nil
 }
@@ -91,13 +75,9 @@ func (sdk *sdkKey) LinkKeyToStorage(opts ...func(params *storage.KeyLinkHTTPPara
 	for _, opt := range opts {
 		opt(params)
 	}
-	res, err := sdk.client.Storage.KeyLinkHTTP(params, sdk.authWriter)
+	_, err := sdk.client.Storage.KeyLinkHTTP(params, sdk.authWriter)
 	if err != nil {
 		return fmt.Errorf("request: %w", err)
-	}
-	if res.Error() != "" {
-		//nolint: typecheck
-		return SwaggerResponseError(res.Error())
 	}
 	return nil
 }
