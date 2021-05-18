@@ -1,6 +1,8 @@
 package gstorage
 
 import (
+	"strings"
+
 	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client"
 	"github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
@@ -30,8 +32,17 @@ func WithBearerAuth(tokenGetter func() string) SdkOpt {
 
 //NewSDK constructor of storage api swagger client wrapper
 //see UI of your data here https://storage.gcorelabs.com/
+//apiHost = https://storage.gcorelabs.com
+//apiBasePath = /api
 func NewSDK(apiHost, apiBasePath string, opts ...SdkOpt) *SDK {
-	transport := httptransport.New(apiHost, apiBasePath, nil)
+	schema := strings.Split(apiHost, "://")
+	if len(schema) > 1 {
+		schema = schema[0:1]
+		apiHost = schema[1]
+	} else {
+		schema = nil
+	}
+	transport := httptransport.New(apiHost, apiBasePath, schema)
 	core := &apiCore{
 		client: client.New(transport, strfmt.Default),
 	}
