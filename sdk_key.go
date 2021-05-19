@@ -22,9 +22,9 @@ func (sdk *sdkKey) KeysList(opts ...func(*key.KeyListHTTPV2Params)) ([]models.Ke
 	if err != nil {
 		return nil, fmt.Errorf("request: %w", err)
 	}
-	list := make([]models.Key, len(res.Payload))
-	for i := range res.Payload {
-		list[i] = *res.Payload[i]
+	list := make([]models.Key, len(res.Payload.Data))
+	for i := range res.Payload.Data {
+		list[i] = *res.Payload.Data[i]
 	}
 	return list, nil
 }

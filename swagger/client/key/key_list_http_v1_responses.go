@@ -47,23 +47,25 @@ func NewKeyListHTTPV1OK() *KeyListHTTPV1OK {
 
 /* KeyListHTTPV1OK describes a response with status code 200, with default header values.
 
-Key
+KeyListEndpointRes
 */
 type KeyListHTTPV1OK struct {
-	Payload []*models.Key
+	Payload *models.KeyListEndpointRes
 }
 
 func (o *KeyListHTTPV1OK) Error() string {
 	return fmt.Sprintf("[GET /provisioning/v1/key][%d] keyListHttpV1OK  %+v", 200, o.Payload)
 }
-func (o *KeyListHTTPV1OK) GetPayload() []*models.Key {
+func (o *KeyListHTTPV1OK) GetPayload() *models.KeyListEndpointRes {
 	return o.Payload
 }
 
 func (o *KeyListHTTPV1OK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(models.KeyListEndpointRes)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

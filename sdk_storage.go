@@ -22,9 +22,9 @@ func (sdk *sdkStorage) StoragesList(opts ...func(params *storage.StorageListHTTP
 	if err != nil {
 		return nil, fmt.Errorf("request: %w", err)
 	}
-	list := make([]models.Storage, len(res.Payload))
-	for i := range res.Payload {
-		list[i] = *res.Payload[i]
+	list := make([]models.Storage, len(res.Payload.Data))
+	for i := range res.Payload.Data {
+		list[i] = *res.Payload.Data[i]
 	}
 	return list, nil
 }

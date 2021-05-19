@@ -47,23 +47,25 @@ func NewStorageListHTTPV1OK() *StorageListHTTPV1OK {
 
 /* StorageListHTTPV1OK describes a response with status code 200, with default header values.
 
-Storage
+StorageListEndpointRes
 */
 type StorageListHTTPV1OK struct {
-	Payload []*models.Storage
+	Payload *models.StorageListEndpointRes
 }
 
 func (o *StorageListHTTPV1OK) Error() string {
 	return fmt.Sprintf("[GET /provisioning/v1/storage][%d] storageListHttpV1OK  %+v", 200, o.Payload)
 }
-func (o *StorageListHTTPV1OK) GetPayload() []*models.Storage {
+func (o *StorageListHTTPV1OK) GetPayload() *models.StorageListEndpointRes {
 	return o.Payload
 }
 
 func (o *StorageListHTTPV1OK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(models.StorageListEndpointRes)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
