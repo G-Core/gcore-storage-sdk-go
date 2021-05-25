@@ -65,9 +65,9 @@ func TestNewSDK(t *testing.T) {
 	csOpts := []func(p *storage.StorageCreateHTTPParams){
 		func(p *storage.StorageCreateHTTPParams) { p.Context = ctx },
 		func(p *storage.StorageCreateHTTPParams) {
-			p.Body.Type = "s3"
+			p.Body.Type = "sftp"
 			p.Body.Name = stName
-			p.Body.Location = "s-ed1"
+			p.Body.Location = "lux"
 		},
 	}
 	csResp, err := sdk.CreateStorage(csOpts...)
@@ -109,19 +109,6 @@ func TestNewSDK(t *testing.T) {
 		t.Fatalf("read storage want %d:%s got %d:%s", stID, stName, stResp[0].ID, stResp[0].Name)
 	}
 
-	// delete storage
-
-	dsOpts := []func(p *storage.StorageDeleteHTTPParams){
-		func(p *storage.StorageDeleteHTTPParams) {
-			p.Context = ctx
-			p.ID = stID
-		},
-	}
-	err = sdk.DeleteStorage(dsOpts...)
-	if err != nil {
-		t.Fatal("delete storage", err)
-	}
-
 	// delete key
 
 	dkOpts := []func(p *key.KeyDeleteHTTPParams){
@@ -133,5 +120,18 @@ func TestNewSDK(t *testing.T) {
 	err = sdk.DeleteKey(dkOpts...)
 	if err != nil {
 		t.Fatal("delete key", err)
+	}
+
+	// delete storage
+
+	dsOpts := []func(p *storage.StorageDeleteHTTPParams){
+		func(p *storage.StorageDeleteHTTPParams) {
+			p.Context = ctx
+			p.ID = stID
+		},
+	}
+	err = sdk.DeleteStorage(dsOpts...)
+	if err != nil {
+		t.Fatal("delete storage", err)
 	}
 }
