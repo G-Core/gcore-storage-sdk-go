@@ -33,3 +33,5 @@ test:
 
 help:
 	echo "if you want to implement api updates then use bash `make`. and extend/update/fix sdk code after."
+
+.PHONY: lint test updatedep gen
