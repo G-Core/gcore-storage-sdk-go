@@ -37,6 +37,7 @@ func WithPermanentTokenAuth(tokenGetter func() string) SdkOpt {
 	return func(sdk *apiCore) {
 		if tokenGetter != nil && tokenGetter() != "" {
 			sdk.authWriter = runtime.ClientAuthInfoWriterFunc(func(r runtime.ClientRequest, _ strfmt.Registry) error {
+				// nolint: wrapcheck
 				return r.SetHeaderParam("Authorization", "APIKey "+tokenGetter())
 			})
 		}

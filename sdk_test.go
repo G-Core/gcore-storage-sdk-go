@@ -13,9 +13,9 @@ import (
 )
 
 func TestNewSDK(t *testing.T) {
-	apiUrl := os.Getenv("TESTS_API_URL")
-	apiPath := os.Getenv("TESTS_API_PATH")
-	apiToken := os.Getenv("TESTS_API_PERMANENT_TOKEN")
+	apiUrl := strings.TrimSpace(os.Getenv("TESTS_API_URL"))
+	apiPath := strings.TrimSpace(os.Getenv("TESTS_API_PATH"))
+	apiToken := strings.TrimSpace(os.Getenv("TESTS_API_PERMANENT_TOKEN"))
 	if apiUrl == "" || apiToken == "" {
 		t.Skip("no defined TESTS_API_URL & TESTS_API_PERMANENT_TOKEN")
 	}
