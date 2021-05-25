@@ -26,7 +26,20 @@ type (
 //WithBearerAuth opt to setup SDK authWriter
 func WithBearerAuth(tokenGetter func() string) SdkOpt {
 	return func(sdk *apiCore) {
-		sdk.authWriter = httptransport.BearerToken(tokenGetter())
+		if tokenGetter != nil && tokenGetter() != "" {
+			sdk.authWriter = httptransport.BearerToken(tokenGetter())
+		}
+	}
+}
+
+//WithPermanentTokenAuth opt to setup SDK authWriter
+func WithPermanentTokenAuth(tokenGetter func() string) SdkOpt {
+	return func(sdk *apiCore) {
+		if tokenGetter != nil && tokenGetter() != "" {
+			sdk.authWriter = runtime.ClientAuthInfoWriterFunc(func(r runtime.ClientRequest, _ strfmt.Registry) error {
+				return r.SetHeaderParam("Authorization", "APIKey "+tokenGetter())
+			})
+		}
 	}
 }
 
