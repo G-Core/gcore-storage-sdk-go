@@ -108,6 +108,7 @@ func (sdk *sdkKey) UpdateStorageCredentials(
 		return nil, fmt.Errorf("request: %w", err)
 	}
 	if res.Payload == nil {
+		// nolint:typecheck
 		return nil, fmt.Errorf("empty: %w", EmptyResultErr("response payload"))
 	}
 	return res.Payload.Credentials, nil
