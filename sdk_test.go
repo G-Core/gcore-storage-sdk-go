@@ -90,6 +90,21 @@ func TestNewSDK(t *testing.T) {
 		t.Fatal("link key to storage", err)
 	}
 
+	// change alias
+
+	serverAlias := "testsdkalias"
+	chsOpts := []func(p *storage.StorageUpdateHTTPParams){
+		func(p *storage.StorageUpdateHTTPParams) {
+			p.Context = ctx
+			p.ID = stID
+			p.Body.ServerAlias = serverAlias
+		},
+	}
+	_, err = sdk.ModifyStorage(chsOpts...)
+	if err != nil {
+		t.Fatal("change storage", err)
+	}
+
 	// read storage
 
 	opts := make([]func(opt *storage.StorageListHTTPV2Params), 0)
@@ -105,8 +120,22 @@ func TestNewSDK(t *testing.T) {
 	if len(stResp) == 0 {
 		t.Fatal("read storage empty response")
 	}
-	if stResp[0].ID != stID && !strings.Contains(stResp[0].Name, stName) {
+	if stResp[0].ID != stID || !strings.Contains(stResp[0].Name, stName) || stResp[0].ServerAlias != serverAlias {
 		t.Fatalf("read storage want %d:%s got %d:%s", stID, stName, stResp[0].ID, stResp[0].Name)
+	}
+
+	// unlink key
+
+	ukOpts := []func(p *storage.KeyUnlinkHTTPParams){
+		func(p *storage.KeyUnlinkHTTPParams) {
+			p.Context = ctx
+			p.ID = stID
+			p.KeyID = keyID
+		},
+	}
+	err = sdk.UnlinkKeyFromStorage(ukOpts...)
+	if err != nil {
+		t.Fatal("unlink key", err)
 	}
 
 	// delete key

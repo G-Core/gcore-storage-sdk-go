@@ -81,3 +81,34 @@ func (sdk *sdkKey) LinkKeyToStorage(opts ...func(params *storage.KeyLinkHTTPPara
 	}
 	return nil
 }
+
+//UnlinkKeyFromStorage writer for g-core storage api
+func (sdk *sdkKey) UnlinkKeyFromStorage(opts ...func(params *storage.KeyUnlinkHTTPParams)) error {
+	params := &storage.KeyUnlinkHTTPParams{}
+	for _, opt := range opts {
+		opt(params)
+	}
+	_, err := sdk.client.Storage.KeyUnlinkHTTP(params, sdk.authWriter)
+	if err != nil {
+		return fmt.Errorf("request: %w", err)
+	}
+	return nil
+}
+
+//UpdateStorageCredentials writer for g-core storage api
+func (sdk *sdkKey) UpdateStorageCredentials(
+	opts ...func(params *storage.StorageUpdateCredentialsHTTPParams)) (*models.Credentials, error) {
+
+	params := &storage.StorageUpdateCredentialsHTTPParams{}
+	for _, opt := range opts {
+		opt(params)
+	}
+	res, err := sdk.client.Storage.StorageUpdateCredentialsHTTP(params, sdk.authWriter)
+	if err != nil {
+		return nil, fmt.Errorf("request: %w", err)
+	}
+	if res.Payload == nil {
+		return nil, fmt.Errorf("empty: %w", EmptyResultErr("response payload"))
+	}
+	return res.Payload.Credentials, nil
+}
