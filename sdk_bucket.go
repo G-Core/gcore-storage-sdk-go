@@ -22,9 +22,6 @@ func (sdk *sdkBucket) BucketsList(opts ...func(params *storage.StorageListBucket
 	if err != nil {
 		return nil, fmt.Errorf("request: %w", err)
 	}
-	if res.Error() != "" {
-		return nil, fmt.Errorf("response: %w", ResponseErr(res.Error()))
-	}
 	list := make([]models.BucketDto, len(res.Payload.Data))
 	for i := range res.Payload.Data {
 		list[i] = *res.Payload.Data[i]
@@ -38,12 +35,9 @@ func (sdk *sdkBucket) CreateBucket(opts ...func(params *storage.StorageBucketCre
 	for _, opt := range opts {
 		opt(params)
 	}
-	res, err := sdk.client.Storage.StorageBucketCreateHTTP(params, sdk.authWriter)
+	_, err := sdk.client.Storage.StorageBucketCreateHTTP(params, sdk.authWriter)
 	if err != nil {
 		return fmt.Errorf("request: %w", err)
-	}
-	if res.Error() != "" {
-		return fmt.Errorf("response: %w", ResponseErr(res.Error()))
 	}
 	return nil
 }
@@ -54,12 +48,9 @@ func (sdk *sdkBucket) DeleteBucket(opts ...func(params *storage.StorageBucketRem
 	for _, opt := range opts {
 		opt(params)
 	}
-	res, err := sdk.client.Storage.StorageBucketRemoveHTTP(params, sdk.authWriter)
+	_, err := sdk.client.Storage.StorageBucketRemoveHTTP(params, sdk.authWriter)
 	if err != nil {
 		return fmt.Errorf("request: %w", err)
-	}
-	if res.Error() != "" {
-		return fmt.Errorf("response: %w", ResponseErr(res.Error()))
 	}
 	return nil
 }
@@ -74,9 +65,6 @@ func (sdk *sdkBucket) BucketCORS(opts ...func(params *storage.GetStorageBucketCO
 	if err != nil {
 		return "", fmt.Errorf("request: %w", err)
 	}
-	if res.Error() != "" {
-		return "", fmt.Errorf("response: %w", ResponseErr(res.Error()))
-	}
 	return res.Payload.Data, nil
 }
 
@@ -86,12 +74,9 @@ func (sdk *sdkBucket) CreateBucketCORS(opts ...func(params *storage.StorageBucke
 	for _, opt := range opts {
 		opt(params)
 	}
-	res, err := sdk.client.Storage.StorageBucketCORSCreateHTTP(params, sdk.authWriter)
+	_, err := sdk.client.Storage.StorageBucketCORSCreateHTTP(params, sdk.authWriter)
 	if err != nil {
 		return fmt.Errorf("request: %w", err)
-	}
-	if res.Error() != "" {
-		return fmt.Errorf("response: %w", ResponseErr(res.Error()))
 	}
 	return nil
 }
@@ -102,12 +87,9 @@ func (sdk *sdkBucket) CreateBucketLifecycle(opts ...func(params *storage.Storage
 	for _, opt := range opts {
 		opt(params)
 	}
-	res, err := sdk.client.Storage.StorageBucketLifecycleCreateHTTP(params, sdk.authWriter)
+	_, err := sdk.client.Storage.StorageBucketLifecycleCreateHTTP(params, sdk.authWriter)
 	if err != nil {
 		return fmt.Errorf("request: %w", err)
-	}
-	if res.Error() != "" {
-		return fmt.Errorf("response: %w", ResponseErr(res.Error()))
 	}
 	return nil
 }
@@ -118,12 +100,9 @@ func (sdk *sdkBucket) DeleteBucketLifecycle(opts ...func(params *storage.Storage
 	for _, opt := range opts {
 		opt(params)
 	}
-	res, err := sdk.client.Storage.StorageBucketLifecycleDeleteHTTP(params, sdk.authWriter)
+	_, err := sdk.client.Storage.StorageBucketLifecycleDeleteHTTP(params, sdk.authWriter)
 	if err != nil {
 		return fmt.Errorf("request: %w", err)
-	}
-	if res.Error() != "" {
-		return fmt.Errorf("response: %w", ResponseErr(res.Error()))
 	}
 	return nil
 }
@@ -134,12 +113,9 @@ func (sdk *sdkBucket) CreateBucketPolicy(opts ...func(params *storage.StorageBuc
 	for _, opt := range opts {
 		opt(params)
 	}
-	res, err := sdk.client.Storage.StorageBucketPolicyCreateHTTP(params, sdk.authWriter)
+	_, err := sdk.client.Storage.StorageBucketPolicyCreateHTTP(params, sdk.authWriter)
 	if err != nil {
 		return fmt.Errorf("request: %w", err)
-	}
-	if res.Error() != "" {
-		return fmt.Errorf("response: %w", ResponseErr(res.Error()))
 	}
 	return nil
 }
