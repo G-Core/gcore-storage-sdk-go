@@ -3,8 +3,8 @@ package gstorage
 import (
 	"fmt"
 
-	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client/key"
-	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/models"
+	"github.com/G-Core/gcore-storage-sdk-go/swagger/client/key"
+	"github.com/G-Core/gcore-storage-sdk-go/swagger/models"
 )
 
 type sdkKey struct {

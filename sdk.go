@@ -3,7 +3,7 @@ package gstorage
 import (
 	"strings"
 
-	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client"
+	"github.com/G-Core/gcore-storage-sdk-go/swagger/client"
 	"github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"

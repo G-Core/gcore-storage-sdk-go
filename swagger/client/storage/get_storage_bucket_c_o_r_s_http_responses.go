@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/models"
+	"github.com/G-Core/gcore-storage-sdk-go/swagger/models"
 )
 
 // GetStorageBucketCORSHTTPReader is a Reader for the GetStorageBucketCORSHTTP structure.

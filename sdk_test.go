@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client/key"
-	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client/storage"
+	"github.com/G-Core/gcore-storage-sdk-go/swagger/client/key"
+	"github.com/G-Core/gcore-storage-sdk-go/swagger/client/storage"
 )
 
 func setupTest(t *testing.T) *SDK {

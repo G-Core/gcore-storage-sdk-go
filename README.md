@@ -9,4 +9,4 @@ And we extend our wrapper of this client after.
 Read Makefile to get more technical details.
 
 ### Status
-[![Build Status](https://travis-ci.com/G-Core/gcorelabs-storage-sdk-go.svg?branch=main)](https://travis-ci.com/G-Core/gcorelabs-storage-sdk-go)
+[![Build Status](https://travis-ci.com/G-Core/gcore-storage-sdk-go.svg?branch=main)](https://travis-ci.com/G-Core/gcore-storage-sdk-go)

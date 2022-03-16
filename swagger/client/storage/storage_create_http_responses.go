@@ -17,7 +17,7 @@ import (
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 
-	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/models"
+	"github.com/G-Core/gcore-storage-sdk-go/swagger/models"
 )
 
 // StorageCreateHTTPReader is a Reader for the StorageCreateHTTP structure.

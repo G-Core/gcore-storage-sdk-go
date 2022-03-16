@@ -10,11 +10,11 @@ import (
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client/key"
-	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client/location"
-	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client/notifications"
-	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client/statistics"
-	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client/storage"
+	"github.com/G-Core/gcore-storage-sdk-go/swagger/client/key"
+	"github.com/G-Core/gcore-storage-sdk-go/swagger/client/location"
+	"github.com/G-Core/gcore-storage-sdk-go/swagger/client/notifications"
+	"github.com/G-Core/gcore-storage-sdk-go/swagger/client/statistics"
+	"github.com/G-Core/gcore-storage-sdk-go/swagger/client/storage"
 )
 
 // Default g c d n storage API HTTP client.

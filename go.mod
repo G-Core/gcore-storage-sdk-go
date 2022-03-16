@@ -1,4 +1,4 @@
-module github.com/G-Core/gcorelabs-storage-sdk-go
+module github.com/G-Core/gcore-storage-sdk-go
 
 go 1.16
 

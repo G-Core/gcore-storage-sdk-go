@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/models"
+	"github.com/G-Core/gcore-storage-sdk-go/swagger/models"
 )
 
 // StorageListBucketsHTTPReader is a Reader for the StorageListBucketsHTTP structure.
