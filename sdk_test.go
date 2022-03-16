@@ -12,15 +12,86 @@ import (
 	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client/storage"
 )
 
-func TestNewSDK(t *testing.T) {
+func setupTest(t *testing.T) *SDK {
+	t.Helper()
 	apiUrl := strings.TrimSpace(os.Getenv("TESTS_API_URL"))
 	apiPath := strings.TrimSpace(os.Getenv("TESTS_API_PATH"))
 	apiToken := strings.TrimSpace(os.Getenv("TESTS_API_PERMANENT_TOKEN"))
 	if apiUrl == "" || apiToken == "" {
 		t.Skip("no defined TESTS_API_URL & TESTS_API_PERMANENT_TOKEN")
 	}
+	return NewSDK(apiUrl, apiPath, WithPermanentTokenAuth(func() string { return apiToken }))
+}
 
-	sdk := NewSDK(apiUrl, apiPath, WithPermanentTokenAuth(func() string { return apiToken }))
+func TestS3Storage(t *testing.T) {
+	sdk := setupTest(t)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	sold := time.Now().Unix()
+
+	// create storage
+
+	stName := fmt.Sprintf("sdk-test-st-s3-%d", sold)
+	csOpts := []func(p *storage.StorageCreateHTTPParams){
+		func(p *storage.StorageCreateHTTPParams) { p.Context = ctx },
+		func(p *storage.StorageCreateHTTPParams) {
+			p.Body.Type = "s3"
+			p.Body.Name = stName
+			p.Body.Location = "s-ed1"
+		},
+	}
+	csResp, err := sdk.CreateStorage(csOpts...)
+	if err != nil {
+		t.Fatal("create storage s3", err)
+	}
+	stID := csResp.ID
+
+	// create bucket
+
+	bckName := fmt.Sprintf("sdk-test-bucket-s3-%d", sold)
+	cbOpts := []func(p *storage.StorageBucketCreateHTTPParams){
+		func(p *storage.StorageBucketCreateHTTPParams) { p.Context = ctx },
+		func(p *storage.StorageBucketCreateHTTPParams) {
+			p.ID = stID
+			p.Name = bckName
+		},
+	}
+	err = sdk.CreateBucket(cbOpts...)
+	if err != nil {
+		t.Fatal("create bucket", err)
+	}
+
+	// delete bucket
+
+	dbOpts := []func(p *storage.StorageBucketRemoveHTTPParams){
+		func(p *storage.StorageBucketRemoveHTTPParams) { p.Context = ctx },
+		func(p *storage.StorageBucketRemoveHTTPParams) {
+			p.ID = stID
+			p.Name = bckName
+		},
+	}
+	err = sdk.DeleteBucket(dbOpts...)
+	if err != nil {
+		t.Fatal("delete bucket", err)
+	}
+
+	// delete storage
+
+	dsOpts := []func(p *storage.StorageDeleteHTTPParams){
+		func(p *storage.StorageDeleteHTTPParams) {
+			p.Context = ctx
+			p.ID = stID
+		},
+	}
+	err = sdk.DeleteStorage(dsOpts...)
+	if err != nil {
+		t.Fatal("delete storage s3", err)
+	}
+}
+
+func TestSFTPStorage(t *testing.T) {
+	sdk := setupTest(t)
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
@@ -61,7 +132,7 @@ func TestNewSDK(t *testing.T) {
 
 	// create storage
 
-	stName := fmt.Sprintf("sdk-test-st-%d", sold)
+	stName := fmt.Sprintf("sdk-test-st-sftp-%d", sold)
 	csOpts := []func(p *storage.StorageCreateHTTPParams){
 		func(p *storage.StorageCreateHTTPParams) { p.Context = ctx },
 		func(p *storage.StorageCreateHTTPParams) {
@@ -72,7 +143,7 @@ func TestNewSDK(t *testing.T) {
 	}
 	csResp, err := sdk.CreateStorage(csOpts...)
 	if err != nil {
-		t.Fatal("create storage", err)
+		t.Fatal("create storage sftp", err)
 	}
 	stID := csResp.ID
 
@@ -161,6 +232,6 @@ func TestNewSDK(t *testing.T) {
 	}
 	err = sdk.DeleteStorage(dsOpts...)
 	if err != nil {
-		t.Fatal("delete storage", err)
+		t.Fatal("delete storage sftp", err)
 	}
 }

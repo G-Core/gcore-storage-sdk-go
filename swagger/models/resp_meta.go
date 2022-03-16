@@ -13,7 +13,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// RespMeta Add Meta to response
+// RespMeta RespMeta Add Meta to response
 //
 // swagger:model RespMeta
 type RespMeta struct {
@@ -45,6 +45,8 @@ func (m *RespMeta) validateMeta(formats strfmt.Registry) error {
 		if err := m.Meta.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("meta")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("meta")
 			}
 			return err
 		}
@@ -73,6 +75,8 @@ func (m *RespMeta) contextValidateMeta(ctx context.Context, formats strfmt.Regis
 		if err := m.Meta.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("meta")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("meta")
 			}
 			return err
 		}

@@ -54,6 +54,8 @@ func (m *StorageListServiceRes) validateStorages(formats strfmt.Registry) error 
 			if err := m.Storages[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("storages" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("storages" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -86,6 +88,8 @@ func (m *StorageListServiceRes) contextValidateStorages(ctx context.Context, for
 			if err := m.Storages[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("storages" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("storages" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

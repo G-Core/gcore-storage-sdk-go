@@ -17,34 +17,37 @@ import (
 // swagger:model StatsMetrics
 type StatsMetrics struct {
 
-	// requests in sum
+	// a FileQuantitySumMax is max sum of files quantity for grouped period
+	FileQuantitySumMax uint64 `json:"file_quantity_sum_max,omitempty"`
+
+	// a RequestsInSum is sum of incoming  requests for grouped period
 	RequestsInSum uint64 `json:"requests_in_sum,omitempty"`
 
-	// requests out edges sum
+	// a RequestsOutEdgesSum is sum of out edges requests for grouped period
 	RequestsOutEdgesSum uint64 `json:"requests_out_edges_sum,omitempty"`
 
-	// requests out wo edges sum
+	// a RequestsOutWoEdgesSum is sum of out no edges requests for grouped period
 	RequestsOutWoEdgesSum uint64 `json:"requests_out_wo_edges_sum,omitempty"`
 
-	// requests sum
+	// a RequestsSum is sum of all requests for grouped period
 	RequestsSum uint64 `json:"requests_sum,omitempty"`
 
-	// size sum max
+	// a SizeSumMax is max sum of all files sizes for grouped period
 	SizeSumMax uint64 `json:"size_sum_max,omitempty"`
 
-	// size sum mean
+	// a SizeSumMean is mean sum of all files sizes for grouped period
 	SizeSumMean uint64 `json:"size_sum_mean,omitempty"`
 
-	// traffic in sum
+	// a TrafficInSum is sum of incoming  traffic for grouped period
 	TrafficInSum uint64 `json:"traffic_in_sum,omitempty"`
 
-	// traffic out edges sum
+	// a TrafficOutEdgesSum is sum of out edges traffic for grouped period
 	TrafficOutEdgesSum uint64 `json:"traffic_out_edges_sum,omitempty"`
 
-	// traffic out wo edges sum
+	// a TrafficOutWoEdgesSum is sum of out no edges traffic for grouped period
 	TrafficOutWoEdgesSum uint64 `json:"traffic_out_wo_edges_sum,omitempty"`
 
-	// traffic sum
+	// a TrafficSum is sum of all traffic for grouped period
 	TrafficSum uint64 `json:"traffic_sum,omitempty"`
 }
 

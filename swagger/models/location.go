@@ -33,6 +33,9 @@ type Location struct {
 	// name
 	Name string `json:"name,omitempty"`
 
+	// title
+	Title map[string]string `json:"title,omitempty"`
+
 	// type
 	Type string `json:"type,omitempty"`
 }

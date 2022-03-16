@@ -61,6 +61,8 @@ func (m *Credentials) validateKeys(formats strfmt.Registry) error {
 			if err := m.Keys[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("keys" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("keys" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -80,6 +82,8 @@ func (m *Credentials) validateS3(formats strfmt.Registry) error {
 		if err := m.S3.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("s3")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("s3")
 			}
 			return err
 		}
@@ -114,6 +118,8 @@ func (m *Credentials) contextValidateKeys(ctx context.Context, formats strfmt.Re
 			if err := m.Keys[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("keys" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("keys" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -130,6 +136,8 @@ func (m *Credentials) contextValidateS3(ctx context.Context, formats strfmt.Regi
 		if err := m.S3.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("s3")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("s3")
 			}
 			return err
 		}

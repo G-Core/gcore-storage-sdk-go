@@ -100,6 +100,9 @@ type StorageListHTTPV2Params struct {
 	// ShowDeleted.
 	ShowDeleted *bool
 
+	// Status.
+	Status *string
+
 	// Type.
 	Type *string
 
@@ -242,6 +245,17 @@ func (o *StorageListHTTPV2Params) WithShowDeleted(showDeleted *bool) *StorageLis
 // SetShowDeleted adds the showDeleted to the storage list Http v2 params
 func (o *StorageListHTTPV2Params) SetShowDeleted(showDeleted *bool) {
 	o.ShowDeleted = showDeleted
+}
+
+// WithStatus adds the status to the storage list Http v2 params
+func (o *StorageListHTTPV2Params) WithStatus(status *string) *StorageListHTTPV2Params {
+	o.SetStatus(status)
+	return o
+}
+
+// SetStatus adds the status to the storage list Http v2 params
+func (o *StorageListHTTPV2Params) SetStatus(status *string) {
+	o.Status = status
 }
 
 // WithType adds the typeVar to the storage list Http v2 params
@@ -394,6 +408,23 @@ func (o *StorageListHTTPV2Params) WriteToRequest(r runtime.ClientRequest, reg st
 		if qShowDeleted != "" {
 
 			if err := r.SetQueryParam("show_deleted", qShowDeleted); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Status != nil {
+
+		// query param status
+		var qrStatus string
+
+		if o.Status != nil {
+			qrStatus = *o.Status
+		}
+		qStatus := qrStatus
+		if qStatus != "" {
+
+			if err := r.SetQueryParam("status", qStatus); err != nil {
 				return err
 			}
 		}

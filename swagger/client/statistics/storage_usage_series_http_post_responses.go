@@ -111,25 +111,32 @@ swagger:model StorageUsageSeriesHTTPPostBody
 */
 type StorageUsageSeriesHTTPPostBody struct {
 
-	// from
+	// a From date filter
+	// Example: 2006-01-02
 	From string `json:"from,omitempty"`
 
-	// granularity
+	// a Granularity is period of time for grouping data
+	// Valid time units are "s", "m", "h".
+	// Example: 12h
 	Granularity string `json:"granularity,omitempty"`
 
-	// locations
+	// a Locations list of filter
+	// Example: ["fra","mia","sin","ams","s-ed1","s-darz1","s-dt2","lux","drf"]
 	Locations []string `json:"locations"`
 
-	// source
+	// a Source is deprecated parameter
 	Source uint8 `json:"source,omitempty"`
 
-	// storages
+	// a Storages list of filter
+	// Example: ["123-myStorage"]
 	Storages []string `json:"storages"`
 
-	// to
+	// a To date filter
+	// Example: 2006-01-02
 	To string `json:"to,omitempty"`
 
-	// ts string
+	// a TsString is configurator of response time format
+	// switch response from unix time format to RFC3339 (2006-01-02T15:04:05Z07:00)
 	TsString bool `json:"ts_string,omitempty"`
 }
 

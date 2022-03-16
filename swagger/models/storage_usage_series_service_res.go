@@ -19,7 +19,7 @@ import (
 // swagger:model StorageUsageSeriesServiceRes
 type StorageUsageSeriesServiceRes struct {
 
-	// clients
+	// a Clients grouped data
 	Clients map[string]ClientStats `json:"clients,omitempty"`
 }
 
@@ -49,6 +49,11 @@ func (m *StorageUsageSeriesServiceRes) validateClients(formats strfmt.Registry) 
 		}
 		if val, ok := m.Clients[k]; ok {
 			if err := val.Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("clients" + "." + k)
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("clients" + "." + k)
+				}
 				return err
 			}
 		}

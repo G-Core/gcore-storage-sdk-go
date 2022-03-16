@@ -30,15 +30,31 @@ type ClientOption func(*runtime.ClientOperation)
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	GetStorageBucketCORSHTTP(params *GetStorageBucketCORSHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetStorageBucketCORSHTTPOK, error)
+
 	KeyLinkHTTP(params *KeyLinkHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*KeyLinkHTTPNoContent, error)
 
 	KeyUnlinkHTTP(params *KeyUnlinkHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*KeyUnlinkHTTPNoContent, error)
+
+	StorageBucketCORSCreateHTTP(params *StorageBucketCORSCreateHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageBucketCORSCreateHTTPNoContent, error)
+
+	StorageBucketCreateHTTP(params *StorageBucketCreateHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageBucketCreateHTTPNoContent, error)
+
+	StorageBucketLifecycleCreateHTTP(params *StorageBucketLifecycleCreateHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageBucketLifecycleCreateHTTPNoContent, error)
+
+	StorageBucketLifecycleDeleteHTTP(params *StorageBucketLifecycleDeleteHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageBucketLifecycleDeleteHTTPNoContent, error)
+
+	StorageBucketPolicyCreateHTTP(params *StorageBucketPolicyCreateHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageBucketPolicyCreateHTTPNoContent, error)
+
+	StorageBucketRemoveHTTP(params *StorageBucketRemoveHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageBucketRemoveHTTPNoContent, error)
 
 	StorageCreateHTTP(params *StorageCreateHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageCreateHTTPOK, error)
 
 	StorageDeleteHTTP(params *StorageDeleteHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageDeleteHTTPNoContent, error)
 
 	StorageGetHTTP(params *StorageGetHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageGetHTTPOK, error)
+
+	StorageListBucketsHTTP(params *StorageListBucketsHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageListBucketsHTTPOK, error)
 
 	StorageListHTTPV1(params *StorageListHTTPV1Params, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageListHTTPV1OK, error)
 
@@ -49,6 +65,47 @@ type ClientService interface {
 	StorageUpdateHTTP(params *StorageUpdateHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageUpdateHTTPOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  GetStorageBucketCORSHTTP gets s3 storage bucket cors
+
+  Get s3 storage bucket cors
+*/
+func (a *Client) GetStorageBucketCORSHTTP(params *GetStorageBucketCORSHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetStorageBucketCORSHTTPOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetStorageBucketCORSHTTPParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getStorageBucketCORSHttp",
+		Method:             "GET",
+		PathPattern:        "/provisioning/v1/storage/{id}/s3/bucket/{name}/cors",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetStorageBucketCORSHTTPReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetStorageBucketCORSHTTPOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getStorageBucketCORSHttp: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -130,6 +187,252 @@ func (a *Client) KeyUnlinkHTTP(params *KeyUnlinkHTTPParams, authInfo runtime.Cli
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for keyUnlinkHttp: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  StorageBucketCORSCreateHTTP creates s3 storage bucket cors
+
+  Create s3 storage bucket cors
+*/
+func (a *Client) StorageBucketCORSCreateHTTP(params *StorageBucketCORSCreateHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageBucketCORSCreateHTTPNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewStorageBucketCORSCreateHTTPParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "storageBucketCORSCreateHttp",
+		Method:             "POST",
+		PathPattern:        "/provisioning/v1/storage/{id}/s3/bucket/{name}/cors",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &StorageBucketCORSCreateHTTPReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*StorageBucketCORSCreateHTTPNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for storageBucketCORSCreateHttp: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  StorageBucketCreateHTTP creates s3 storage bucket
+
+  Create s3 storage bucket
+*/
+func (a *Client) StorageBucketCreateHTTP(params *StorageBucketCreateHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageBucketCreateHTTPNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewStorageBucketCreateHTTPParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "storageBucketCreateHttp",
+		Method:             "POST",
+		PathPattern:        "/provisioning/v1/storage/{id}/s3/bucket/{name}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &StorageBucketCreateHTTPReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*StorageBucketCreateHTTPNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for storageBucketCreateHttp: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  StorageBucketLifecycleCreateHTTP creates s3 storage bucket lifecycle
+
+  Create s3 storage bucket lifecycle
+*/
+func (a *Client) StorageBucketLifecycleCreateHTTP(params *StorageBucketLifecycleCreateHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageBucketLifecycleCreateHTTPNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewStorageBucketLifecycleCreateHTTPParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "storageBucketLifecycleCreateHttp",
+		Method:             "POST",
+		PathPattern:        "/provisioning/v1/storage/{id}/s3/bucket/{name}/lifecycle",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &StorageBucketLifecycleCreateHTTPReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*StorageBucketLifecycleCreateHTTPNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for storageBucketLifecycleCreateHttp: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  StorageBucketLifecycleDeleteHTTP deletes s3 storage bucket lifecycle
+
+  Delete s3 storage bucket lifecycle
+*/
+func (a *Client) StorageBucketLifecycleDeleteHTTP(params *StorageBucketLifecycleDeleteHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageBucketLifecycleDeleteHTTPNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewStorageBucketLifecycleDeleteHTTPParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "storageBucketLifecycleDeleteHttp",
+		Method:             "DELETE",
+		PathPattern:        "/provisioning/v1/storage/{id}/s3/bucket/{name}/lifecycle",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &StorageBucketLifecycleDeleteHTTPReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*StorageBucketLifecycleDeleteHTTPNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for storageBucketLifecycleDeleteHttp: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  StorageBucketPolicyCreateHTTP creates s3 storage bucket policy
+
+  Create s3 storage bucket policy
+*/
+func (a *Client) StorageBucketPolicyCreateHTTP(params *StorageBucketPolicyCreateHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageBucketPolicyCreateHTTPNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewStorageBucketPolicyCreateHTTPParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "storageBucketPolicyCreateHttp",
+		Method:             "POST",
+		PathPattern:        "/provisioning/v1/storage/{id}/s3/bucket/{name}/policy",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &StorageBucketPolicyCreateHTTPReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*StorageBucketPolicyCreateHTTPNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for storageBucketPolicyCreateHttp: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  StorageBucketRemoveHTTP removes s3 storage bucket
+
+  Remove s3 storage bucket
+*/
+func (a *Client) StorageBucketRemoveHTTP(params *StorageBucketRemoveHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageBucketRemoveHTTPNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewStorageBucketRemoveHTTPParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "storageBucketRemoveHttp",
+		Method:             "DELETE",
+		PathPattern:        "/provisioning/v1/storage/{id}/s3/bucket/{name}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &StorageBucketRemoveHTTPReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*StorageBucketRemoveHTTPNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for storageBucketRemoveHttp: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -253,6 +556,47 @@ func (a *Client) StorageGetHTTP(params *StorageGetHTTPParams, authInfo runtime.C
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for storageGetHttp: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  StorageListBucketsHTTP lists s3 storage buckets
+
+  List s3 storage buckets
+*/
+func (a *Client) StorageListBucketsHTTP(params *StorageListBucketsHTTPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*StorageListBucketsHTTPOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewStorageListBucketsHTTPParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "storageListBucketsHttp",
+		Method:             "GET",
+		PathPattern:        "/provisioning/v1/storage/{id}/s3/buckets",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &StorageListBucketsHTTPReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*StorageListBucketsHTTPOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for storageListBucketsHttp: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

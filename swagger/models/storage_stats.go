@@ -17,67 +17,84 @@ import (
 // swagger:model StorageStats
 type StorageStats struct {
 
-	// name
+	// a BucketsSeries is max bucket files count for grouped period {name:[[timestamp, count]]}
+	// Example: {"bucketA":[[1632748614,1],[1632748615,2],[1632748616,2],[1632748617,1]]}
+	BucketsSeries map[string][][]interface{} `json:"buckets_series,omitempty"`
+
+	// a FileQuantitySumMax is max sum of files quantity for grouped period
+	FileQuantitySumMax uint64 `json:"file_quantity_sum_max,omitempty"`
+
+	// a Name of storage
 	Name string `json:"name,omitempty"`
 
-	// requests in series
+	// a RequestsInSeries is sum of incoming requests for grouped period [[timestamp, count]]
+	// Example: [[1632748614,1],[1632748615,2],[1632748616,2],[1632748617,1]]
 	RequestsInSeries [][]interface{} `json:"requests_in_series"`
 
-	// requests in sum
+	// a RequestsInSum is sum of incoming  requests for grouped period
 	RequestsInSum uint64 `json:"requests_in_sum,omitempty"`
 
-	// requests out edges series
+	// a RequestsOutWoEdgesSeries is sum of out requests (only edges) for grouped period [[timestamp, count]]
+	// Example: [[1632748614,1],[1632748615,2],[1632748616,2],[1632748617,1]]
 	RequestsOutEdgesSeries [][]interface{} `json:"requests_out_edges_series"`
 
-	// requests out edges sum
+	// a RequestsOutEdgesSum is sum of out edges requests for grouped period
 	RequestsOutEdgesSum uint64 `json:"requests_out_edges_sum,omitempty"`
 
-	// requests out wo edges series
+	// a RequestsOutWoEdgesSeries is sum of out requests (without edges) for grouped period [[timestamp, count]]
+	// Example: [[1632748614,1],[1632748615,2],[1632748616,2],[1632748617,1]]
 	RequestsOutWoEdgesSeries [][]interface{} `json:"requests_out_wo_edges_series"`
 
-	// requests out wo edges sum
+	// a RequestsOutWoEdgesSum is sum of out no edges requests for grouped period
 	RequestsOutWoEdgesSum uint64 `json:"requests_out_wo_edges_sum,omitempty"`
 
-	// requests series
+	// a RequestsSeries is sum of out requests for grouped period [[timestamp, count]]
+	// Example: [[1632748614,1],[1632748615,2],[1632748616,2],[1632748617,1]]
 	RequestsSeries [][]interface{} `json:"requests_series"`
 
-	// requests sum
+	// a RequestsSum is sum of all requests for grouped period
 	RequestsSum uint64 `json:"requests_sum,omitempty"`
 
-	// size max series
+	// a SizeMaxSeries is max of files size for grouped period [[timestamp, count]]
+	// Example: [[1632748614,1],[1632748615,2],[1632748616,2],[1632748617,1]]
 	SizeMaxSeries [][]interface{} `json:"size_max_series"`
 
-	// size mean
+	// a SizeMean is mean of files size for grouped period [[timestamp, count]]
+	// Example: [[1632748614,1],[1632748615,2],[1632748616,2],[1632748617,1]]
 	SizeMean [][]interface{} `json:"size_mean_series"`
 
-	// size sum max
+	// a SizeSumMax is max sum of all files sizes for grouped period
 	SizeSumMax uint64 `json:"size_sum_max,omitempty"`
 
-	// size sum mean
+	// a SizeSumMean is mean sum of all files sizes for grouped period
 	SizeSumMean uint64 `json:"size_sum_mean,omitempty"`
 
-	// traffic in series
+	// a TrafficInSeries is sum of incoming traffic bytes for grouped period [[timestamp, count]]
+	// Example: [[1632748614,1],[1632748615,2],[1632748616,2],[1632748617,1]]
 	TrafficInSeries [][]interface{} `json:"traffic_in_series"`
 
-	// traffic in sum
+	// a TrafficInSum is sum of incoming  traffic for grouped period
 	TrafficInSum uint64 `json:"traffic_in_sum,omitempty"`
 
-	// traffic out edges series
+	// a TrafficOutWoEdgesSeries is sum of out traffic bytes (only edges) for grouped period [[timestamp, count]]
+	// Example: [[1632748614,1],[1632748615,2],[1632748616,2],[1632748617,1]]
 	TrafficOutEdgesSeries [][]interface{} `json:"traffic_out_edges_series"`
 
-	// traffic out edges sum
+	// a TrafficOutEdgesSum is sum of out edges traffic for grouped period
 	TrafficOutEdgesSum uint64 `json:"traffic_out_edges_sum,omitempty"`
 
-	// traffic out wo edges series
+	// a TrafficOutWoEdgesSeries is sum of out traffic bytes (without edges) for grouped period [[timestamp, count]]
+	// Example: [[1632748614,1],[1632748615,2],[1632748616,2],[1632748617,1]]
 	TrafficOutWoEdgesSeries [][]interface{} `json:"traffic_out_wo_edges_series"`
 
-	// traffic out wo edges sum
+	// a TrafficOutWoEdgesSum is sum of out no edges traffic for grouped period
 	TrafficOutWoEdgesSum uint64 `json:"traffic_out_wo_edges_sum,omitempty"`
 
-	// traffic series
+	// a TrafficSeries is sum of traffic bytes for grouped period [[timestamp, count]]
+	// Example: [[1632748614,1],[1632748615,2],[1632748616,2],[1632748617,1]]
 	TrafficSeries [][]interface{} `json:"traffic_series"`
 
-	// traffic sum
+	// a TrafficSum is sum of all traffic for grouped period
 	TrafficSum uint64 `json:"traffic_sum,omitempty"`
 }
 

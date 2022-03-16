@@ -12,6 +12,7 @@ import (
 
 	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client/key"
 	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client/location"
+	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client/notifications"
 	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client/statistics"
 	"github.com/G-Core/gcorelabs-storage-sdk-go/swagger/client/storage"
 )
@@ -22,10 +23,10 @@ var Default = NewHTTPClient(nil)
 const (
 	// DefaultHost is the default Host
 	// found in Meta (info) section of spec file
-	DefaultHost string = "storage.gcorelabs.com"
+	DefaultHost string = "api.gcorelabs.com"
 	// DefaultBasePath is the default BasePath
 	// found in Meta (info) section of spec file
-	DefaultBasePath string = "/api/"
+	DefaultBasePath string = "/storage/"
 )
 
 // DefaultSchemes are the default schemes found in Meta (info) section of spec file
@@ -60,6 +61,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *GCDNStorag
 	cli.Transport = transport
 	cli.Key = key.New(transport, formats)
 	cli.Location = location.New(transport, formats)
+	cli.Notifications = notifications.New(transport, formats)
 	cli.Statistics = statistics.New(transport, formats)
 	cli.Storage = storage.New(transport, formats)
 	return cli
@@ -110,6 +112,8 @@ type GCDNStorageAPI struct {
 
 	Location location.ClientService
 
+	Notifications notifications.ClientService
+
 	Statistics statistics.ClientService
 
 	Storage storage.ClientService
@@ -122,6 +126,7 @@ func (c *GCDNStorageAPI) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 	c.Key.SetTransport(transport)
 	c.Location.SetTransport(transport)
+	c.Notifications.SetTransport(transport)
 	c.Statistics.SetTransport(transport)
 	c.Storage.SetTransport(transport)
 }

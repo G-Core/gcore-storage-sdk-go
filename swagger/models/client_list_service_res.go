@@ -54,6 +54,8 @@ func (m *ClientListServiceRes) validateClients(formats strfmt.Registry) error {
 			if err := m.Clients[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("clients" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("clients" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -86,6 +88,8 @@ func (m *ClientListServiceRes) contextValidateClients(ctx context.Context, forma
 			if err := m.Clients[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("clients" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("clients" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

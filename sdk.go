@@ -16,6 +16,7 @@ type (
 	SDK struct {
 		*sdkKey
 		*sdkStorage
+		*sdkBucket
 	}
 	apiCore struct {
 		client     *client.GCDNStorageAPI
@@ -45,9 +46,9 @@ func WithPermanentTokenAuth(tokenGetter func() string) SdkOpt {
 }
 
 //NewSDK constructor of storage api swagger client wrapper
-//see UI of your data here https://storage.gcorelabs.com/
-//apiHost = https://storage.gcorelabs.com
-//apiBasePath = /api
+//see UI of your data here https://api.gcorelabs.com/storage
+//apiHost = https://api.gcorelabs.com
+//apiBasePath = /storage
 func NewSDK(apiHost, apiBasePath string, opts ...SdkOpt) *SDK {
 	schema := strings.Split(apiHost, "://")
 	if len(schema) > 1 {
@@ -66,5 +67,6 @@ func NewSDK(apiHost, apiBasePath string, opts ...SdkOpt) *SDK {
 	return &SDK{
 		sdkKey:     &sdkKey{apiCore: core},
 		sdkStorage: &sdkStorage{apiCore: core},
+		sdkBucket:  &sdkBucket{apiCore: core},
 	}
 }
