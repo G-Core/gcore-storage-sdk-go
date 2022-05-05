@@ -20,7 +20,10 @@ func setupTest(t *testing.T) *SDK {
 	if apiUrl == "" || apiToken == "" {
 		t.Skip("no defined TESTS_API_URL & TESTS_API_PERMANENT_TOKEN")
 	}
-	return NewSDK(apiUrl, apiPath, WithPermanentTokenAuth(func() string { return apiToken }))
+	return NewSDK(apiUrl, apiPath,
+		WithPermanentTokenAuth(func() string { return apiToken }),
+		WithUserAgent("sdk-test"),
+	)
 }
 
 func TestS3Storage(t *testing.T) {
