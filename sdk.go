@@ -1,6 +1,7 @@
 package gstorage
 
 import (
+	"net/http"
 	"strings"
 
 	"github.com/G-Core/gcore-storage-sdk-go/swagger/client"
@@ -21,6 +22,7 @@ type (
 	apiCore struct {
 		client     *client.GCDNStorageAPI
 		authWriter runtime.ClientAuthInfoWriter
+		agent      string
 	}
 )
 
@@ -30,6 +32,13 @@ func WithBearerAuth(tokenGetter func() string) SdkOpt {
 		if tokenGetter != nil && tokenGetter() != "" {
 			sdk.authWriter = httptransport.BearerToken(tokenGetter())
 		}
+	}
+}
+
+//WithUserAgent opt
+func WithUserAgent(agent string) SdkOpt {
+	return func(sdk *apiCore) {
+		sdk.agent = agent
 	}
 }
 
@@ -58,15 +67,32 @@ func NewSDK(apiHost, apiBasePath string, opts ...SdkOpt) *SDK {
 		schema = nil
 	}
 	transport := httptransport.New(apiHost, apiBasePath, schema)
-	core := &apiCore{
-		client: client.New(transport, strfmt.Default),
-	}
+	core := &apiCore{}
 	for _, opt := range opts {
 		opt(core)
 	}
+	if core.agent != "" {
+		transport.Transport = customUserAgent{
+			root:  transport.Transport,
+			value: core.agent,
+		}
+	}
+	core.client = client.New(transport, strfmt.Default)
+
 	return &SDK{
 		sdkKey:     &sdkKey{apiCore: core},
 		sdkStorage: &sdkStorage{apiCore: core},
 		sdkBucket:  &sdkBucket{apiCore: core},
 	}
+}
+
+type customUserAgent struct {
+	root  http.RoundTripper
+	value string
+}
+
+// RoundTrip implemented
+func (c customUserAgent) RoundTrip(request *http.Request) (*http.Response, error) {
+	request.Header.Set("User-Agent", c.value)
+	return c.root.RoundTrip(request)
 }
