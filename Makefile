@@ -23,7 +23,7 @@ gen:
 	./bin/swagger generate client -f https://api.gcorelabs.com/storage/docs/swagger.json -t swagger
 
 updatedep:
-	go list -m -u all
+	go list -mod=mod -m -u all
 
 lint:
 	./bin/golangci-lint run ./sdk*.go
