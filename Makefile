@@ -20,7 +20,7 @@ dep:
 	go mod vendor
 
 gen:
-	./bin/swagger generate client -f https://api.gcorelabs.com/storage/docs/swagger.json -t swagger
+	./bin/swagger generate client -f https://api.gcore.com/storage/docs/swagger.json -t swagger
 
 updatedep:
 	go list -mod=mod -m -u all

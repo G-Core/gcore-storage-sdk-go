@@ -11,8 +11,8 @@ type sdkKey struct {
 	*apiCore
 }
 
-//KeysList getter for g-core storage api
-//same result like on UI here https://storage.gcorelabs.com/ssh-key/list
+// KeysList getter for g-core storage api
+// same result like on UI here https://storage.gcore.com/ssh-key/list
 func (sdk *sdkKey) KeysList(opts ...func(*key.KeyListHTTPV2Params)) ([]models.Key, error) {
 	params := &key.KeyListHTTPV2Params{}
 	for _, opt := range opts {
@@ -29,7 +29,7 @@ func (sdk *sdkKey) KeysList(opts ...func(*key.KeyListHTTPV2Params)) ([]models.Ke
 	return list, nil
 }
 
-//CreateKey writer for g-core storage api
+// CreateKey writer for g-core storage api
 func (sdk *sdkKey) CreateKey(opts ...func(*key.KeyCreateHTTPParams)) (*models.Key, error) {
 	params := &key.KeyCreateHTTPParams{}
 	for _, opt := range opts {
@@ -42,7 +42,7 @@ func (sdk *sdkKey) CreateKey(opts ...func(*key.KeyCreateHTTPParams)) (*models.Ke
 	return res.Payload, nil
 }
 
-//DeleteKey writer for g-core storage api
+// DeleteKey writer for g-core storage api
 func (sdk *sdkKey) DeleteKey(opts ...func(*key.KeyDeleteHTTPParams)) error {
 	params := &key.KeyDeleteHTTPParams{}
 	for _, opt := range opts {

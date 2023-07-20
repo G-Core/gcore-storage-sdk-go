@@ -1,6 +1,6 @@
 # G-Core Labs Storage API Golang SDK
 
-The purpose of this project is to cover G-Core Storage API methods related with G-Core Terraform plugin (https://github.com/G-Core/terraform-provider-gcorelabs).
+The purpose of this project is to cover G-Core Storage API methods related with G-Core Terraform plugin (https://github.com/G-Core/terraform-provider-gcore).
 
 ## Internal design of SDK
 
