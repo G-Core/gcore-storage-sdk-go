@@ -26,7 +26,7 @@ type (
 	}
 )
 
-//WithBearerAuth opt to setup SDK authWriter
+// WithBearerAuth opt to setup SDK authWriter
 func WithBearerAuth(tokenGetter func() string) SdkOpt {
 	return func(sdk *apiCore) {
 		if tokenGetter != nil && tokenGetter() != "" {
@@ -35,14 +35,14 @@ func WithBearerAuth(tokenGetter func() string) SdkOpt {
 	}
 }
 
-//WithUserAgent opt
+// WithUserAgent opt
 func WithUserAgent(agent string) SdkOpt {
 	return func(sdk *apiCore) {
 		sdk.agent = agent
 	}
 }
 
-//WithPermanentTokenAuth opt to setup SDK authWriter
+// WithPermanentTokenAuth opt to setup SDK authWriter
 func WithPermanentTokenAuth(tokenGetter func() string) SdkOpt {
 	return func(sdk *apiCore) {
 		if tokenGetter != nil && tokenGetter() != "" {
@@ -54,10 +54,10 @@ func WithPermanentTokenAuth(tokenGetter func() string) SdkOpt {
 	}
 }
 
-//NewSDK constructor of storage api swagger client wrapper
-//see UI of your data here https://api.gcorelabs.com/storage
-//apiHost = https://api.gcorelabs.com
-//apiBasePath = /storage
+// NewSDK constructor of storage api swagger client wrapper
+// see UI of your data here https://api.gcore.com/storage
+// apiHost = https://api.gcore.com
+// apiBasePath = /storage
 func NewSDK(apiHost, apiBasePath string, opts ...SdkOpt) *SDK {
 	schema := strings.Split(apiHost, "://")
 	if len(schema) > 1 {
